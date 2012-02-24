@@ -1,0 +1,5 @@
+gen/
+bin/
+bin/resources.ap_
+.DS_Store
+target/
