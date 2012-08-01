@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.rayer.util.filesystem.FileUtil;
+
 public abstract class FileSystemResourceProvisioner<T, IndexType> implements ResourceProvisioner<T, IndexType> {
 
 	@Override
@@ -81,6 +83,6 @@ public abstract class FileSystemResourceProvisioner<T, IndexType> implements Res
 	
 	@Override
 	public boolean clearAllCachedResource() {
-		return false;
+		return FileUtil.deleteTree(mCacheDir);
 	}
 }

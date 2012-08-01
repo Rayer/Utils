@@ -129,6 +129,7 @@ public class FileUtil {
 
 			// if directory not exists, create it
 			if (!dest.exists()) {
+				dest.getParentFile().mkdirs();
 				dest.mkdir();
 				// System.out.println("Directory copied from "
 				// + src + "  to " + dest);
@@ -263,5 +264,7 @@ public class FileUtil {
 					+ aDirectory);
 		}
 	}
+	
+	
 
 }

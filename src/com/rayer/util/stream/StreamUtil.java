@@ -16,24 +16,36 @@ public class StreamUtil {
 	 * @throws IOException throw by BufferedReader.readLine
 	 */
 	public static String InputStreamToString(InputStream is) throws IOException {
-		return InputStreamToString(is, false);
+		return InputStreamToString(is, false, true);
+//		if(is == null)
+//			return "";
+//		
+//		StringBuilder sb = new StringBuilder();
+//		BufferedReader reader = new BufferedReader(new inputStreamReader(is, "UTF-8"));
+//		Character buffer;
+//		while(reader.read(buffer) != -1)
+//			sb.append(buffer);
+		
 	}
 	
 
-	public static String InputStreamToString(InputStream is, boolean filterLastZeroPadding) throws IOException {
+	public static String InputStreamToString(InputStream is, boolean filterLastZeroPadding, boolean closeStream) throws IOException {
 		/*
 		* To convert the InputStream to String we use the BufferedReader.readLine()
 		* method. We iterate until the BufferedReader return null which means
 		* there's no more data to read. Each line will appended to a StringBuilder
 		* and returned as String.
 		*/
-			
+
 		if (is != null) {
 		StringBuilder sb = new StringBuilder();
 		String line;
 		try {
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
 			while ((line = reader.readLine()) != null) {
+			
 				if(filterLastZeroPadding == true) {
 					int offset = line.indexOf(0);
 					if(offset != -1)
@@ -41,8 +53,11 @@ public class StreamUtil {
 				}
 				sb.append(line).append("\n");
 			}
+			
+
 		} finally {
-			is.close();
+			if(closeStream)
+				is.close();
 		}
 		return sb.toString();
 		} 
@@ -50,6 +65,8 @@ public class StreamUtil {
 			return "";
 		}
 	}
+	
+
 	
 
 	public static final void copyInputStream(InputStream in, OutputStream out) throws IOException {

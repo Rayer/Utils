@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -59,7 +60,7 @@ public class StringUtil {
 		stringToStream(content, new FileOutputStream(file));
 	}
 	
-	public static void stringToStream(String content, FileOutputStream fout) throws IOException {
+	public static void stringToStream(String content, OutputStream fout) throws IOException {
 		DataOutputStream dataout = new DataOutputStream(fout);
 		byte[] data1 = content.getBytes("UTF-8");
 		dataout.write(data1);

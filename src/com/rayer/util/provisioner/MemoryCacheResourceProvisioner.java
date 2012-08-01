@@ -24,10 +24,10 @@ public abstract class MemoryCacheResourceProvisioner<T, IndexType> implements
 	@Override
 	public boolean setResource(IndexType identificator, T targetResource) {
 		ResourceElement target = mResourceMap.get(identificator);
-		if(target == null) {
+		//if(target == null) {
 			target = new ResourceElement(targetResource);
 			mResourceMap.put(identificator, target);
-		}
+		//}
 		
 		return false;
 	}

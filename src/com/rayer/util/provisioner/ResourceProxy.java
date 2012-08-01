@@ -2,7 +2,8 @@ package com.rayer.util.provisioner;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public abstract class ResourceProxy<T, IndexType> {
 	boolean mForceUpdate = false;
@@ -40,28 +41,86 @@ public abstract class ResourceProxy<T, IndexType> {
 		ResourceProvisioner<T, IndexType> lastProvisioner = mProvisionerList.get(mProvisionerList.size() - 1);
 		
 		T target = null;
-		Iterator<ResourceProvisioner<T, IndexType> > itor = mProvisionerList.iterator();
-		while(itor.hasNext()) {
-			ResourceProvisioner<T, IndexType> targetProvisioner = itor.next();
+//		Iterator<ResourceProvisioner<T, IndexType> > itor = mProvisionerList.iterator();
+
 			//Force Update機制調整 在Force Update下 只會取最後一個Provisioner並且把他寫入前面所有的Provisioner
-			if(mForceUpdate == false || targetProvisioner != lastProvisioner)
+			
+//			if(mForceUpdate == true) {
+//				targetProvisioner = lastProvisioner;
+//				try {
+//					target = lastProvisioner.getResource(getIndentificator());
+//					if(target != null)
+//						for(ResourceProvisioner<T, IndexType> r : mProvisionerList) {
+//							if(r != targetProvisioner)
+//								r.setResource(getIndentificator(), target);
+//						}
+//							
+//				} catch (IOException e) {
+//					listener.onNotifyErrorOccures(e);
+//					e.printStackTrace();
+//				}
+//				
+//				return target;
+//			}
+//			
+//			if(targetProvisioner != lastProvisioner)
+//				try {
+//					target = mForceUpdate ? null : targetProvisioner.getResource(getIndentificator());
+//					
+//				} catch (IOException e) {
+//					if(listener != null)
+//						listener.onNotifyErrorOccures(e);
+//					else
+//						e.printStackTrace();
+//				}
+//			
+//			if(target != null) {
+//				for(ResourceProvisioner<T, IndexType> r : mWaitToWriteList)
+//					r.setResource(getIndentificator(), target);
+//				break;
+//			}
+//			
+//			mWaitToWriteList.add(targetProvisioner);
+		
+		if(mForceUpdate) {
+			try {
+				target = lastProvisioner.getResource(getIndentificator());
+			} catch (IOException e) {
+				if(listener != null)
+					listener.onNotifyErrorOccures(e);
+				e.printStackTrace();
+			}
+			if(target != null)
+				for(ResourceProvisioner<T, IndexType> r : mProvisionerList)
+					if(r != lastProvisioner) {
+						r.setResource(getIndentificator(), target);
+					}
+		}
+		else
+		{
+			for(ResourceProvisioner<T, IndexType> targetProvisioner : mProvisionerList) {
 				try {
 					target = targetProvisioner.getResource(getIndentificator());
+
 				} catch (IOException e) {
 					if(listener != null)
 						listener.onNotifyErrorOccures(e);
-					else
-						e.printStackTrace();
+					e.printStackTrace();
 				}
-			
-			if(target != null) {
-				for(ResourceProvisioner<T, IndexType> r : mWaitToWriteList)
-					r.setResource(getIndentificator(), target);
-				break;
+				if(target == null)
+					mWaitToWriteList.add(targetProvisioner);
+				else {
+					for(ResourceProvisioner<T, IndexType> r : mProvisionerList)
+						if(r != targetProvisioner) {
+							r.setResource(getIndentificator(), target);
+						}
+					break;
+				}
 			}
-			
-			mWaitToWriteList.add(targetProvisioner);
 		}
+
+
+		
 		return target;
 	}
 	
@@ -69,15 +128,39 @@ public abstract class ResourceProxy<T, IndexType> {
 	 * Get resource via non-blocking(asynchronized) method
 	 * @param listener listener as its name mentioned.
 	 */
+	
+	static Executor defaultExecutor = Executors.newFixedThreadPool(1);
+	Executor exec;
+	
+	public void setExecutor(Executor inExec) {
+		exec = inExec;
+	}
+	
+	private Executor getExec() {
+		if(exec == null)
+			return defaultExecutor;
+		
+		return exec;
+	}
+	
 	public void getResourceAsync(final ResourceProxyListener<T> listener) {
-		Thread t = new Thread(new Runnable(){
+		
+		getExec().execute(new Runnable(){
 
 			@Override
 			public void run() {
 				T target = getResource(listener);
-				listener.onFinishedLoading(target);
+				listener.onFinishedLoading(target);				
 			}});
-		t.run();
+		
+//		Thread t = new Thread(new Runnable(){
+//
+//			@Override
+//			public void run() {
+//				T target = getResource(listener);
+//				listener.onFinishedLoading(target);
+//			}});
+//		t.start();
 		
 	}
 	
@@ -88,6 +171,29 @@ public abstract class ResourceProxy<T, IndexType> {
 		void onNotifyCacheDownloadCompleted();
 		void onNotifyErrorOccures(Exception e);
 		void onFinishedLoading(T t);
+	}
+	
+	public abstract static class DefResourceProxyListener<T> implements ResourceProxyListener<T> {
+
+		@Override
+		public void onNotifyCacheAvailible(boolean isCacheAvailible) {
+			
+		}
+
+		@Override
+		public void onNotifyCacheDownloadCompleted() {
+			
+		}
+
+		@Override
+		public void onNotifyErrorOccures(Exception e) {
+			// TODO Auto-generated method stub
+			e.printStackTrace();
+		}
+
+		@Override
+		public abstract void onFinishedLoading(T t);
+		
 	}
 }
 
