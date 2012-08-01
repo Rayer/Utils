@@ -82,6 +82,9 @@ public class ZipUtil {
 			FileOutputStream fout = new FileOutputStream(new File(destination.getPath() + "/" + zentry.getName()));
 			for (int c = zis.read(); c != -1; c = zis.read())
 				fout.write(c);
+			
+			fout.flush();
+			fout.close();
 			//StreamUtil.copyInputStream(zis.getInputStream(zentry), new BufferedOutputStream(new FileOutputStream(destinationDir + z.getName()),ZIP_OUTPUTSTREAM_BUFFER_SIZE));
 
 		}

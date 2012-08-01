@@ -150,6 +150,10 @@ public abstract class InternetResourceProvisionerToFile<IndexType> extends
 			int len;
 			while((len = tempIs.read(buf)) > 0) 
 				targetFos.write(buf, 0, len);
+			
+			targetFos.flush();
+			targetFos.close();
+			tempIs.close();
 		} catch (FileNotFoundException e) {
 			handleFileError(ret, e);
 			return null;

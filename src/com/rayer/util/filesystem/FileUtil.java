@@ -32,6 +32,9 @@ public class FileUtil {
 			int len;
 			while ((len = is.read(buf)) > 0)
 				fos.write(buf, 0, len);
+			
+			fos.flush();
+			fos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
