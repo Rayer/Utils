@@ -21,14 +21,19 @@ public abstract class FileSystemResourceProvisioner<T, IndexType> implements Res
 		try {
 			FileOutputStream fout = new FileOutputStream(file);
 			writeToOutputStream(targetResource, fout);
-			
+			fout.flush();
+			fout.close();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 		
 		
-		return false;
+		return true;
 	}
 
 	String mCacheDir;

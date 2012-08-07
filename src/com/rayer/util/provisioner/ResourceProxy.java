@@ -35,7 +35,7 @@ public abstract class ResourceProxy<T, IndexType> {
 	 * @param listener as its name, usually not useful while in non-async mode, but may have some use in special case. Can be null.
 	 * @return Resource
 	 */
-	public T getResource(ResourceProxyListener<T> listener) {
+	public synchronized T getResource(ResourceProxyListener<T, IndexType> listener) {
 		mWaitToWriteList.clear();
 		
 		ResourceProvisioner<T, IndexType> lastProvisioner = mProvisionerList.get(mProvisionerList.size() - 1);
@@ -110,6 +110,11 @@ public abstract class ResourceProxy<T, IndexType> {
 				if(target == null)
 					mWaitToWriteList.add(targetProvisioner);
 				else {
+//					try {
+//						throw new Exception("Get from : " + targetProvisioner.getClass().getName());
+//					}catch(Exception e) {
+//						e.printStackTrace();
+//					}
 					for(ResourceProvisioner<T, IndexType> r : mProvisionerList)
 						if(r != targetProvisioner) {
 							r.setResource(getIndentificator(), target);
@@ -119,8 +124,7 @@ public abstract class ResourceProxy<T, IndexType> {
 			}
 		}
 
-
-		
+		listener.onFinishedLoading(target, getIndentificator());
 		return target;
 	}
 	
@@ -129,7 +133,7 @@ public abstract class ResourceProxy<T, IndexType> {
 	 * @param listener listener as its name mentioned.
 	 */
 	
-	static Executor defaultExecutor = Executors.newFixedThreadPool(1);
+	static Executor defaultExecutor = Executors.newFixedThreadPool(10);
 	Executor exec;
 	
 	public void setExecutor(Executor inExec) {
@@ -143,14 +147,15 @@ public abstract class ResourceProxy<T, IndexType> {
 		return exec;
 	}
 	
-	public void getResourceAsync(final ResourceProxyListener<T> listener) {
+	public void getResourceAsync(final ResourceProxyListener<T, IndexType> listener) {
 		
 		getExec().execute(new Runnable(){
 
 			@Override
-			public void run() {
-				T target = getResource(listener);
-				listener.onFinishedLoading(target);				
+			public void run() {	
+				getResource(listener);
+				//T target = getResource(listener);
+				//listener.onFinishedLoading(target);				
 			}});
 		
 //		Thread t = new Thread(new Runnable(){
@@ -166,14 +171,14 @@ public abstract class ResourceProxy<T, IndexType> {
 	
 	public abstract IndexType getIndentificator();
 	
-	public interface ResourceProxyListener<T> {
+	public interface ResourceProxyListener<T, IndexType> {
 		void onNotifyCacheAvailible(boolean isCacheAvailible);
 		void onNotifyCacheDownloadCompleted();
 		void onNotifyErrorOccures(Exception e);
-		void onFinishedLoading(T t);
+		void onFinishedLoading(T t, IndexType index);
 	}
 	
-	public abstract static class DefResourceProxyListener<T> implements ResourceProxyListener<T> {
+	public abstract static class DefResourceProxyListener<T, IndexType> implements ResourceProxyListener<T, IndexType> {
 
 		@Override
 		public void onNotifyCacheAvailible(boolean isCacheAvailible) {
@@ -187,12 +192,11 @@ public abstract class ResourceProxy<T, IndexType> {
 
 		@Override
 		public void onNotifyErrorOccures(Exception e) {
-			// TODO Auto-generated method stub
 			e.printStackTrace();
 		}
 
 		@Override
-		public abstract void onFinishedLoading(T t);
+		public abstract void onFinishedLoading(T t, IndexType index);
 		
 	}
 }
