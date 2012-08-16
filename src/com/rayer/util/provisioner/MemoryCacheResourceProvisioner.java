@@ -64,6 +64,15 @@ public abstract class MemoryCacheResourceProvisioner<T, IndexType> implements
 	 */
 	public abstract boolean destroyElement(T source);
 
+	public boolean removeItemCache(IndexType index) {
+		ResourceElement resource = mResourceMap.get(index);
+		if(resource == null)
+			return false;
+		
+		boolean ret = destroyElement(resource.object);
+		mResourceMap.remove(index);
+		return ret;
+	}
 	
 	class ResourceElement {
 		ResourceElement(T inResource) {
