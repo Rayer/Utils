@@ -115,7 +115,7 @@ public abstract class ResourceProxy<T, IndexType> {
 //					}catch(Exception e) {
 //						e.printStackTrace();
 //					}
-					for(ResourceProvisioner<T, IndexType> r : mProvisionerList)
+					for(ResourceProvisioner<T, IndexType> r : mWaitToWriteList)
 						if(r != targetProvisioner) {
 							r.setResource(getIndentificator(), target);
 						}
