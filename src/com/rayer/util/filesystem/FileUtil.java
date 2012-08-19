@@ -6,7 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.io.OutputStream;
+import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +37,7 @@ public class FileUtil {
 			int len;
 			while ((len = is.read(buf)) > 0)
 				fos.write(buf, 0, len);
-			
+
 			fos.flush();
 			fos.close();
 		} catch (FileNotFoundException e) {
@@ -96,36 +101,36 @@ public class FileUtil {
 		return (path.delete());
 	}
 
-//	public static long getExternalStorageSpace() {
-//
-//		long space = 0;
-//		try {
-//			StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
-//					.getAbsolutePath());
-//			space = (long) stat.getAvailableBlocks()
-//					* (long) stat.getBlockSize();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return space;
-//	}
-//
-//	public static boolean isExternalStorageExist() {
-//		return Environment.getExternalStorageState().equals(
-//				Environment.MEDIA_MOUNTED) ? true : false;
-//	}
-//
-//	public static float getLocalStorageSpace() {
-//		float space = 0;
-//		try {
-//			StatFs stat = new StatFs("/data/");
-//			space = stat.getAvailableBlocks() * (float) stat.getBlockSize();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return space;
-//	}
+	// public static long getExternalStorageSpace() {
+	//
+	// long space = 0;
+	// try {
+	// StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
+	// .getAbsolutePath());
+	// space = (long) stat.getAvailableBlocks()
+	// * (long) stat.getBlockSize();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	//
+	// return space;
+	// }
+	//
+	// public static boolean isExternalStorageExist() {
+	// return Environment.getExternalStorageState().equals(
+	// Environment.MEDIA_MOUNTED) ? true : false;
+	// }
+	//
+	// public static float getLocalStorageSpace() {
+	// float space = 0;
+	// try {
+	// StatFs stat = new StatFs("/data/");
+	// space = stat.getAvailableBlocks() * (float) stat.getBlockSize();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// return space;
+	// }
 
 	public static void copyFolder(File src, File dest) throws IOException {
 		if (src.isDirectory()) {
@@ -231,9 +236,9 @@ public class FileUtil {
 		File[] filesAndDirs = aStartingDir.listFiles();
 		List<File> filesDirs = Arrays.asList(filesAndDirs);
 		for (File file : filesDirs) {
-			if(file.getName().startsWith("."))
+			if (file.getName().startsWith("."))
 				continue;
-			
+
 			result.add(file); // always add, even if directory
 			if (!file.isFile()) {
 				// must be a directory
@@ -267,7 +272,38 @@ public class FileUtil {
 					+ aDirectory);
 		}
 	}
+
+	public void saveSerializedItem(String cachePath, Serializable item) throws IOException {
+		saveSerializedItem(new File(cachePath), item);
+	}
 	
+	public void saveSerializedItem(File cacheFile, Serializable item) throws IOException {
+		cacheFile.createNewFile();
+
+		ObjectOutputStream obj_out = new ObjectOutputStream(
+				new FileOutputStream(cacheFile));
+		obj_out.writeObject(item);
+		obj_out.flush();
+		obj_out.close();
+		
+	}
+
+	public <T extends Serializable> T getSerializedItem(String cachePath) throws IOException, ClassNotFoundException {
+		return getSerializedItem(new File(cachePath));
+	}
 	
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable> T getSerializedItem(File cacheFile) throws IOException, ClassNotFoundException {
+		T ret = null;
+
+		//File inputFile = new File(cachePath);
+		ObjectInputStream obj_in = new ObjectInputStream(
+				new FileInputStream(cacheFile));
+		ret = (T) obj_in.readObject();
+		obj_in.close();
+		
+
+		return ret;
+	}
 
 }
