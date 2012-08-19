@@ -16,8 +16,6 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-//import android.util.Log;
-
 import com.rayer.util.drm.DRMServer.IRequestReply.ReplyType;
 import com.rayer.util.stream.StreamUtil;
 

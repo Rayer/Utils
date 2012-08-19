@@ -56,6 +56,7 @@ public class StringUtil {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
+	@Deprecated
 	public static void stringToFile(File file, String content) throws FileNotFoundException, IOException {
 		stringToStream(content, new FileOutputStream(file));
 	}
