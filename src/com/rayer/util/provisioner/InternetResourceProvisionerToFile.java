@@ -140,7 +140,6 @@ public abstract class InternetResourceProvisionerToFile<IndexType> extends
 			File root = new File(getTargetFileDir());
 			root.mkdirs();
 			
-			//Log.d("hamibook2", "copying to : " + getTargetFileDir() + "/" + getIdentificator());
 			ret = new File(getTargetFileDir() + "/" + getIdentificator());
 			if(ret.exists())
 				ret.delete();

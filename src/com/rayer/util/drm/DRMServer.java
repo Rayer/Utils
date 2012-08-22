@@ -146,7 +146,7 @@ public class DRMServer extends Decryptable {
 		
 	}
 	
-//這寫法比較簡潔 可是...
+//ÈÄôÂØ´Ê≥ïÊØîËºÉÁ∞°ÊΩî ÂèØÊòØ...
 //	static private class RequestReplyMethod<T> {
 //
 //		T mReplyData;
@@ -156,9 +156,9 @@ public class DRMServer extends Decryptable {
 //	}
 	
 	/**
-	 * 設定特殊回傳直。當request到這個特殊回傳值時，他會取代掉原有的方法，改傳回指定的字串
-	 * @param specifiedRequest 指定回傳直的檔名。請特別注意這個不分大小寫！
-	 * @param reply 指定回傳直的內容, null代表直接看到這東西就忽略掉
+	 * Ë®≠ÂÆöÁâπÊÆäÂõûÂÇ≥Áõ¥„ÄÇÁï∂requestÂà∞ÈÄôÂÄãÁâπÊÆäÂõûÂÇ≥ÂÄºÊôÇÔºå‰ªñÊúÉÂèñ‰ª£ÊéâÂéüÊúâÁöÑÊñπÊ≥ïÔºåÊîπÂÇ≥ÂõûÊåáÂÆöÁöÑÂ≠ó‰∏≤
+	 * @param specifiedRequest ÊåáÂÆöÂõûÂÇ≥Áõ¥ÁöÑÊ™îÂêç„ÄÇË´ãÁâπÂà•Ê≥®ÊÑèÈÄôÂÄã‰∏çÂàÜÂ§ßÂ∞èÂØ´ÔºÅ
+	 * @param reply ÊåáÂÆöÂõûÂÇ≥Áõ¥ÁöÑÂÖßÂÆπ, null‰ª£Ë°®Áõ¥Êé•ÁúãÂà∞ÈÄôÊù±Ë•øÂ∞±ÂøΩÁï•Êéâ
 	 */
 	public void setDesignatedRequestReply(String specifiedRequest, String reply) {
 		String request = specifiedRequest.toLowerCase();
@@ -168,9 +168,9 @@ public class DRMServer extends Decryptable {
 	}
 	
 	/**
-	 * 設定特殊回傳直。當request到這個特殊回傳值時，他會取代掉原有的方法，改傳回指定的檔案內容
-	 * @param specifiedRequest 指定回傳直的檔名。請特別注意這個不分大小寫！
-	 * @param reply 指定回傳直的檔案, null代表直接看到這東西就忽略掉
+	 * Ë®≠ÂÆöÁâπÊÆäÂõûÂÇ≥Áõ¥„ÄÇÁï∂requestÂà∞ÈÄôÂÄãÁâπÊÆäÂõûÂÇ≥ÂÄºÊôÇÔºå‰ªñÊúÉÂèñ‰ª£ÊéâÂéüÊúâÁöÑÊñπÊ≥ïÔºåÊîπÂÇ≥ÂõûÊåáÂÆöÁöÑÊ™îÊ°àÂÖßÂÆπ
+	 * @param specifiedRequest ÊåáÂÆöÂõûÂÇ≥Áõ¥ÁöÑÊ™îÂêç„ÄÇË´ãÁâπÂà•Ê≥®ÊÑèÈÄôÂÄã‰∏çÂàÜÂ§ßÂ∞èÂØ´ÔºÅ
+	 * @param reply ÊåáÂÆöÂõûÂÇ≥Áõ¥ÁöÑÊ™îÊ°à, null‰ª£Ë°®Áõ¥Êé•ÁúãÂà∞ÈÄôÊù±Ë•øÂ∞±ÂøΩÁï•Êéâ
 	 */
 	public void setDesignatedRequestReply(String specifiedRequest, File replyFileHandle) {
 		String request = specifiedRequest.toLowerCase();
@@ -186,7 +186,7 @@ public class DRMServer extends Decryptable {
 		mDesignatedReplyMap.put(request, null);
 	}
 
-//	//log相關
+//	//logÁõ∏Èóú
 //	static boolean VERBOSE = false;
 //	static String VERBOSE_TITLE = "DRMServer";
 //	void logD(String log) {
@@ -284,7 +284,7 @@ public class DRMServer extends Decryptable {
 		private void parseGetCommand(String commandToken, OutputStream os) throws IOException {
 			
 			//logD("Command Token : " + commandToken);
-			//先檢查是否在mDesignatedReplyMap裡面
+			//ÂÖàÊ™¢Êü•ÊòØÂê¶Âú®mDesignatedReplyMapË£°Èù¢
 			if(mDesignatedReplyMap.containsKey(commandToken.toLowerCase()) == true) {
 				
 				//logD("Exclusive token : " + commandToken);
@@ -314,7 +314,7 @@ public class DRMServer extends Decryptable {
 		}
 
 		private void writeToOutput(InputStream is, OutputStream os) throws IOException {
-			//解密以及輸出
+			//Ëß£ÂØÜ‰ª•ÂèäËº∏Âá∫
 			//FileInputStream fis = new FileInputStream(file);
 			//InputStream fis = createDecryptStream(file);
 			
@@ -333,7 +333,7 @@ public class DRMServer extends Decryptable {
 			
 
 			StringBuilder sb = new StringBuilder();
-			//這一定要第一行
+			//ÈÄô‰∏ÄÂÆöË¶ÅÁ¨¨‰∏ÄË°å
 			
 			sb.append("HTTP/1.1 200 OK" + CRLF);
 
@@ -411,13 +411,11 @@ public class DRMServer extends Decryptable {
 			while(command != null && command.equals("") == false && command.equals(CRLF) == false) {
 				command = reader.readLine();
 				
-				//Log.d("hamibook2", "get command : " + command);
 				StringTokenizer st = new StringTokenizer(command);
 				String header = "";
 				if(st.hasMoreTokens())
 					header = st.nextToken();
 				
-				//先不處理其他東西 先只處理get
 				if(header.equalsIgnoreCase("GET"))
 					parseGetCommand(st.nextToken(), os);				
 			}

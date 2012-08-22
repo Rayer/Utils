@@ -49,7 +49,6 @@ public abstract class FileSystemResourceProvisioner<T, IndexType> implements Res
 	public T getResource(IndexType identificator) {
 		File parent = new File(mCacheDir);
 		if(parent.exists() == false) {
-			//Log.d("hamibook2", "Attemp to create subdirectory :" + mCacheDir + " result : " + parent.mkdirs());
 			parent.mkdirs();
 		}
 		InputStream targetInputStream = null;

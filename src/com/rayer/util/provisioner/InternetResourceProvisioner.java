@@ -88,12 +88,9 @@ public abstract class InternetResourceProvisioner<T, IndexType> implements Resou
 		
 			url = new URL(getUrlAddress(mIdentificator));
 			URLConnection conn = url.openConnection();
-			
-			//Log.d("hamibook2", "Attemping to fetch from internet : " + getUrlAddress(""));
-			
+						
 			is = conn.getInputStream();
 			mFileLength = conn.getHeaderFieldInt("content-length", -1);
-			//Log.d("hamibook2", "file length = " + mFileLength);
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

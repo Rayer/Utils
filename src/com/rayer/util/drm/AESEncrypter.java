@@ -157,12 +157,7 @@ public class AESEncrypter implements EncrypterBase
 			int numRead = 0;
 			while ((numRead = in.read(buf)) >= 0)
 			{
-//				int offset = numRead - 1;
-//				while(buf[offset - 1] == 0) {
-//					Log.d("hamibook2", "detected \0");
-//					offset--;
-//				}
-				
+			
 				out.write(buf, 0, numRead);
 			}
 			
@@ -182,26 +177,6 @@ public class AESEncrypter implements EncrypterBase
 			e.printStackTrace();
 		}
 	}
-	
-//	public synchronized void decrypt(InputStream in, OutputStream out) {
-//		Log.d("hamibook2", "new decrypting");
-//		int numRead = 0;
-//		EncryptLib.resetIVector();
-//		try {
-//			while((numRead = in.read(buf)) >= 0) {
-//
-//				EncryptLib.AesEncryptBlock(buf, keyBytes, EncryptLib.AES_CBC, false);
-//				//byte[] output = buf.clone();
-//				out.write(buf, 0, numRead);
-//
-//			}
-//			out.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
-	
+
 
 }

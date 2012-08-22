@@ -15,8 +15,6 @@ import com.rayer.util.stream.StreamUtil;
 
 public class ZipUtil {
 	
-	public static final boolean VERBOSE = true;
-	public static final String DEBUGTITLE = "hamibook2";
 	public static final int ZIP_OUTPUTSTREAM_BUFFER_SIZE = 8192;
 	
 	public static final void unzip(String filepath, String destinationDir) throws IOException {
