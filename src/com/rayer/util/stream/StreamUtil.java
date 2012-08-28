@@ -17,15 +17,6 @@ public class StreamUtil {
 	 */
 	public static String InputStreamToString(InputStream is) throws IOException {
 		return InputStreamToString(is, false, true);
-//		if(is == null)
-//			return "";
-//		
-//		StringBuilder sb = new StringBuilder();
-//		BufferedReader reader = new BufferedReader(new inputStreamReader(is, "UTF-8"));
-//		Character buffer;
-//		while(reader.read(buffer) != -1)
-//			sb.append(buffer);
-		
 	}
 	
 
@@ -66,28 +57,48 @@ public class StreamUtil {
 		}
 	}
 	
-
-	
-
-	public static final void copyInputStream(InputStream in, OutputStream out) throws IOException {
-		copyInputStream(in, out, 1024);
+	public static final void duplicateStream(int bufferSize, InputStream in, OutputStream... out) throws IOException {
+		byte[] buffer = new byte[bufferSize];
+		int len;
+		
+	    while((len = in.read(buffer)) >= 0) {
+	    	for(OutputStream o : out)
+		      o.write(buffer, 0, len);
+	    }
+	    
+	    for(OutputStream o : out) {
+	    	o.flush();
+	    	o.close();
+	    }
+	    
+	    in.close();
+		
 	}
 	
-	public static final void copyInputStream(InputStream in, OutputStream out, int bufferSize) throws IOException {
+	public static final void duplicateStream(InputStream in, OutputStream... out) throws IOException {
+		duplicateStream(1024, in, out);
+	}
+	
+
+
+	public static final void copyInputStream(InputStream in, OutputStream out) throws IOException {
+		copyInputStream(1024, in, out);
+	}
+	
+
+	public static final void copyInputStream(int bufferSize, InputStream in, OutputStream out) throws IOException {
 		byte[] buffer = new byte[bufferSize];
 	    int len;
 
 	    while((len = in.read(buffer)) >= 0)
 	      out.write(buffer, 0, len);
 
+	    
 	    in.close();
+	    out.flush();
 	    out.close();
 	    
 	}
-	
-//	public static File InputStreamToFile(InputStream is, File f) {
-//		FileOutputStream
-//		return null;
-//	}
+
 
 }
