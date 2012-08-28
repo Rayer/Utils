@@ -43,7 +43,7 @@ public class AESEncryptKeys {
 		try {
 			byte[] source = (m_uuid + filename + m_magic + m_msisdn).getBytes();
 			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.digest(source);
+			//digest.digest(source);
 			
 			byte[] md5Result = digest.digest(source);
 			key = StringUtil.asHex(md5Result).toUpperCase().substring(0, 16);
@@ -52,6 +52,7 @@ public class AESEncryptKeys {
 			//aesKey =  md5.asHex().substring(0, 16).toUpperCase().getBytes();
 		} catch(Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		return key.getBytes();
 	}

@@ -124,7 +124,8 @@ public abstract class ResourceProxy<T, IndexType> {
 			}
 		}
 
-		listener.onFinishedLoading(target, getIndentificator());
+		if(listener != null)
+			listener.onFinishedLoading(target, getIndentificator());
 		return target;
 	}
 	

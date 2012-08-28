@@ -411,6 +411,9 @@ public class DRMServer extends Decryptable {
 			while(command != null && command.equals("") == false && command.equals(CRLF) == false) {
 				command = reader.readLine();
 				
+				if(command == null)
+					return;
+				
 				StringTokenizer st = new StringTokenizer(command);
 				String header = "";
 				if(st.hasMoreTokens())
