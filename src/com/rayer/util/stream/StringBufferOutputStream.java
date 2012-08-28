@@ -4,6 +4,12 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * Not finished yet
+ * @deprecated
+ * @author rayer
+ *
+ */
 public class StringBufferOutputStream extends BufferedOutputStream {
 
 	public StringBufferOutputStream(OutputStream arg0) {

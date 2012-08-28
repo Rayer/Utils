@@ -18,13 +18,28 @@ import java.util.List;
 
 import com.rayer.util.drm.AESEncrypter;
 
+/**
+ * File Utilities
+ * @author rayer
+ *
+ */
 public class FileUtil {
 
+	/**
+	 * Write any stream into file
+	 * @param is target InputStream
+	 * @param filename
+	 */
 	public static void writeStreamToFile(InputStream is, String filename) {
 		File f = new File(filename);
 		writeStreamToFile(is, f);
 	}
 
+	/**
+	 * Write any stream into file
+	 * @param is target Inputstream;
+	 * @param f File handler
+	 */
 	public static void writeStreamToFile(InputStream is, File f) {
 		if (f.exists() == true)
 			f.delete();
@@ -46,16 +61,18 @@ public class FileUtil {
 
 	}
 
-	public static boolean checkFileExist(String string) {
-		File f = new File(string);
-		return f.exists();
-	}
 
 	public static void decryptStreamToFile(InputStream is, AESEncrypter aes,
 			String string) {
 
 	}
 
+	/**
+	 * A simple way to copy a file
+	 * @param source source file path
+	 * @param dest destination file path
+	 * @return
+	 */
 	public static boolean copyFile(String source, String dest) {
 		try {
 			File f1 = new File(source);
@@ -81,10 +98,20 @@ public class FileUtil {
 
 	}
 
+	/**
+	 * A simple way to perform rm -rf
+	 * @param filePath target dictionary
+	 * @return
+	 */
 	public static boolean deleteTree(String filePath) {
 		return deleteTree(new File(filePath));
 	}
 
+	/**
+	 * A simply way to perform rm -rf
+	 * @param path
+	 * @return
+	 */
 	public static boolean deleteTree(File path) {
 		if (path.exists()) {
 			File[] files = path.listFiles();
@@ -130,6 +157,12 @@ public class FileUtil {
 	// return space;
 	// }
 
+	/**
+	 * A simple way to perform cp -r
+	 * @param src source directory
+	 * @param dest destination directory
+	 * @throws IOException
+	 */
 	public static void copyFolder(File src, File dest) throws IOException {
 		if (src.isDirectory()) {
 
@@ -172,6 +205,12 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * A easy way to create checksum of the file, this is NOT MD5!
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
 	public static byte[] createChecksum(File f) throws Exception {
 
 		InputStream fis = new FileInputStream(f);
@@ -190,14 +229,25 @@ public class FileUtil {
 		fis.close();
 		return complete.digest();
 	}
+	
+	/**
+	 * A easy way to create checksum of the file, this is NOT MD5!
+	 * @param filename
+	 * @return
+	 * @throws Exception
+	 */
 
 	public static byte[] createChecksum(String filename) throws Exception {
 		return createChecksum(new File(filename));
 	}
 
-	// see this How-to for a faster way to convert
-	// a byte array to a HEX string
 
+	/**
+	 * A easy way to create MD5 of the file
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
 	public static String getMD5Checksum(File f) throws Exception {
 		byte[] b = createChecksum(f);
 		String result = "";
@@ -208,6 +258,12 @@ public class FileUtil {
 		return result;
 	}
 
+	/**
+	 * A easy way to create MD5 of the file
+	 * @param filename
+	 * @return
+	 * @throws Exception
+	 */
 	public static String getMD5Checksum(String filename) throws Exception {
 		return getMD5Checksum(new File(filename));
 	}
@@ -271,10 +327,22 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * A easy way to save any bean implements Serialable to file
+	 * @param cachePath
+	 * @param item
+	 * @throws IOException
+	 */
 	public void saveSerializedItem(String cachePath, Serializable item) throws IOException {
 		saveSerializedItem(new File(cachePath), item);
 	}
 	
+	/**
+	 * A easy way to save any bean implements Serialable to file
+	 * @param cacheFile
+	 * @param item
+	 * @throws IOException
+	 */
 	public void saveSerializedItem(File cacheFile, Serializable item) throws IOException {
 		cacheFile.createNewFile();
 
@@ -286,10 +354,24 @@ public class FileUtil {
 		
 	}
 
+	/**
+	 * A easy way to load any bean implements Serialable from file
+	 * @param cachePath
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public <T extends Serializable> T getSerializedItem(String cachePath) throws IOException, ClassNotFoundException {
 		return getSerializedItem(new File(cachePath));
 	}
 	
+	/**
+	 * A easy way to load any bean implements Serialable from file
+	 * @param cacheFile
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T getSerializedItem(File cacheFile) throws IOException, ClassNotFoundException {
 		T ret = null;

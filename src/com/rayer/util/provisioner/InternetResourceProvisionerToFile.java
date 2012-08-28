@@ -7,32 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-//import android.util.Log;
-
+/**
+ * A DAO with Download progress support, it can be use solely without ResourceProxy or combined.
+ * @author rayer
+ * @param <IndexType>
+ * @see ResourceProxy
+ */
 public abstract class InternetResourceProvisionerToFile<IndexType> extends
 		InternetResourceProvisioner<File, IndexType> {
-	
-//	static public boolean DEBUG_MODE = false;
-//	static public String DEBUG_MODEL_NAME = "InternetResourceProvisionerToFile";
-//	static public String DEBUG_TAG = "RAYER_UTILS";
-//	static public void logD(String message){
-//		if(DEBUG_MODE == false)
-//			return;
-//		Log.d(DEBUG_TAG, DEBUG_MODEL_NAME + " : " + message);
-//	}
-//	
-//	static public void logI(String message) {
-//		if(DEBUG_MODE == false)
-//			return;
-//		Log.i(DEBUG_TAG, DEBUG_MODEL_NAME + " : " + message);
-//	}
-//	
-//	static public void logE(String message) {
-//		if(DEBUG_MODE == false)
-//			return;
-//		Log.e(DEBUG_TAG, DEBUG_MODEL_NAME + " : " + message);
-//	}
-	
+
 	public InternetResourceProvisionerToFile(InternetResourceProvisionerToFileListener inListener) {
 		mListener = inListener;
 	}

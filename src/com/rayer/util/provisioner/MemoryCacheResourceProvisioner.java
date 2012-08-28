@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
  
+/**
+ * This is a generic memory cache for any type
+ * @author rayer
+ *
+ * @param <T>
+ * @param <IndexType>
+ * @see ResourceProxy
+ * @see ResourceProvisioner
+ */
 public abstract class MemoryCacheResourceProvisioner<T, IndexType> implements
 		ResourceProvisioner<T, IndexType> {
 	HashMap<IndexType, ResourceElement > mResourceMap = new HashMap<IndexType, ResourceElement >();

@@ -9,6 +9,15 @@ import java.io.InputStream;
 
 import com.rayer.util.filesystem.FileUtil;
 
+/**
+ * A Resource Provisioner DAO for ResourceProxy. It serve as a resourece source from FileSystem.
+ * For usage, see ResourceProxy.java
+ * @author rayer
+ * @param <T>
+ * @param <IndexType>
+ * @see ResourceProxy
+ * @see ResourceProvisioner
+ */
 public abstract class FileSystemResourceProvisioner<T, IndexType> implements ResourceProvisioner<T, IndexType> {
 
 	@Override
@@ -82,7 +91,18 @@ public abstract class FileSystemResourceProvisioner<T, IndexType> implements Res
 		return mCacheDir;
 	}
 	
+	/**
+	 * Describe how to form Resource from Inputstream
+	 * @param in inputstream
+	 * @return target resource
+	 */
 	public abstract T formFromStream(InputStream in);
+	
+	/**
+	 * Describe how to output from Resource(Serialize)
+	 * @param target target
+	 * @param fo outputstream
+	 */
 	public abstract void writeToOutputStream(T target, FileOutputStream fo);
 	
 	@Override

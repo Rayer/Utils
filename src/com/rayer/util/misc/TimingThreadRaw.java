@@ -1,7 +1,11 @@
 package com.rayer.util.misc;
 
 
-
+/**
+ * Another unfinished works, do not use it.
+ * @deprecated
+ * @author rayer
+ */
 public class TimingThreadRaw extends Thread {
 	
 	long mEndTime;

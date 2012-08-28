@@ -3,10 +3,10 @@ package com.rayer.util.databridge;
 
 
 /**
- * This class is for some native class which be declared as 'final' so that can't change it's initial value.
+ * This class is for some native class which be declared as 'final' so that can't change it's initial value.</br>
+ * It is extremely useful while 'final' keyword troubles you while using anonymous class.
  * @author rayer
- *
- * @param <T>
+ * @param <T> target native class
  */
 public class ObjectWrapper<T> {
 	@SuppressWarnings("unchecked")

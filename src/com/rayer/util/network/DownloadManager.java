@@ -5,6 +5,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * A not trusted download manager, don't use it
+ * It will be replaced soon.
+ * @author rayer
+ *
+ */
 public class DownloadManager {
 	
 	interface IDMListener {

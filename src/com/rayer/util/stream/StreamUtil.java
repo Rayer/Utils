@@ -7,6 +7,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 
+/**
+ * There are some utilities for Streaming.
+ * @author rayer
+ *
+ */
 public class StreamUtil {
 	
 	/**
@@ -20,6 +25,14 @@ public class StreamUtil {
 	}
 	
 
+	/**
+	 * Another way to convert Stream to String.
+	 * @param is
+	 * @param filterLastZeroPadding
+	 * @param closeStream
+	 * @return
+	 * @throws IOException
+	 */
 	public static String InputStreamToString(InputStream is, boolean filterLastZeroPadding, boolean closeStream) throws IOException {
 		/*
 		* To convert the InputStream to String we use the BufferedReader.readLine()
@@ -57,6 +70,13 @@ public class StreamUtil {
 		}
 	}
 	
+	/**
+	 * Get a input stream and write to multiple output stream, very useful while need T-pipe
+	 * @param bufferSize default is 1024
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public static final void duplicateStream(int bufferSize, InputStream in, OutputStream... out) throws IOException {
 		byte[] buffer = new byte[bufferSize];
 		int len;
@@ -75,17 +95,36 @@ public class StreamUtil {
 		
 	}
 	
+	/**
+	 * Get a input stream and write to multiple output stream, very useful while need T-pipe
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public static final void duplicateStream(InputStream in, OutputStream... out) throws IOException {
 		duplicateStream(1024, in, out);
 	}
 	
 
 
+	/**
+	 * Directly adapt inputstream to outputstream
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public static final void copyInputStream(InputStream in, OutputStream out) throws IOException {
 		copyInputStream(1024, in, out);
 	}
 	
 
+	/**
+	 * Directly adapt inputstream to outputstream
+	 * @param bufferSize
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public static final void copyInputStream(int bufferSize, InputStream in, OutputStream out) throws IOException {
 		byte[] buffer = new byte[bufferSize];
 	    int len;

@@ -1,5 +1,23 @@
 package com.rayer.util.provisioner;
+/*
+This is ResourceProxy. It consumes several ResourceProvisioner and use it as cache orderly.
 
+MemoryCacheResourceProvisioner<Bitmap, String> memCache;
+FileSystemResourceProvisioner<Bitmap, String> fsCache;
+InternetResourceProvisioner<Bitmap, String> inet;
+
+ResourceProxy<Bitmap, String> proxy = new ResourceProxy<Bitmap, String>();
+proxy.addProvisioner(memCahce);
+proxy.addProvisioner(fsCache);
+proxy.addProvisioner(inet);
+
+Bitmap target = proxy.getResource();
+
+It will see if memory have bitmap, if no, will see if it cached in FileSystem, if still no, it will download from Internet and fill FileSystem and Memory.
+If FileSystem have cache, it will fill Memory 
+
+of course, if Memory have cahce, it will only ask MemoryCache and skip others. And, there is a option named 'forced' to force it reload from last provisioner.
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;

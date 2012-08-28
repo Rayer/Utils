@@ -10,10 +10,11 @@ import com.rayer.util.stream.PatchInputStream;
 
 
 /**
- * Resource Provider as Internet connection.
+ * Resource Provider as Internet connection. For usage, see ResourceProxy.java
  * @author rayer
- *
- * @param <T>
+ * @param <T, IndexType>
+ * @see ResourceProxy
+ * @see ResourceProvisioner
  */
 public abstract class InternetResourceProvisioner<T, IndexType> implements ResourceProvisioner<T, IndexType> {
 

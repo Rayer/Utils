@@ -1,5 +1,10 @@
 package com.rayer.util.misc;
 
+/**
+ * A not completed thing.... do not use it
+ * @deprecated
+ * @author rayer
+ */
 @SuppressWarnings("unused")
 public class TimingThread extends Thread {
 	private long mStartTime;

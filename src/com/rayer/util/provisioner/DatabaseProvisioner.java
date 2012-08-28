@@ -9,7 +9,15 @@ import java.io.IOException;
 
 
 
-
+/**
+ * A DAO for Database, still in progress, and do not use it.
+ * @deprecated
+ * @author rayer
+ *
+ * @param <Type>
+ * @param <IndexType>
+ * @see ResourceProvisioner
+ */
 public class DatabaseProvisioner<Type, IndexType> implements
 		ResourceProvisioner<Type, IndexType> {
 	

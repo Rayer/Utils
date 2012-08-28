@@ -13,10 +13,21 @@ import java.util.zip.ZipInputStream;
 import com.rayer.util.stream.StreamUtil;
 
 
+/**
+ * As it plainly explained, a zip unzipper
+ * @author rayer
+ *
+ */
 public class ZipUtil {
 	
 	public static final int ZIP_OUTPUTSTREAM_BUFFER_SIZE = 8192;
 	
+	/**
+	 * Unzip a file
+	 * @param filepath
+	 * @param destinationDir
+	 * @throws IOException
+	 */
 	public static final void unzip(String filepath, String destinationDir) throws IOException {
 		Enumeration<?> entries;
 		ZipFile zipFile;
@@ -31,15 +42,9 @@ public class ZipUtil {
 		if(f.exists() == false)
 			f.mkdirs();
 		
-//		if(VERBOSE) {
-//		Log.d(DEBUGTITLE, "Attemping to unzip : " + filepath);
-//			Log.d(DEBUGTITLE, "Extract to : " + destinationDir);
-//		}
+
 		while(entries.hasMoreElements()) {
 			ZipEntry z = (ZipEntry) entries.nextElement();
-			
-			//Log.d(DEBUGTITLE, "Unzipping to : " + destinationDir + z.getName());
-			//Log.d(DEBUGTITLE, "zip entry : " + z.getName() + " " +z.isDirectory());
 
 			if(z.isDirectory()) {
 				File directory = new File(destinationDir + z.getName());
@@ -59,6 +64,12 @@ public class ZipUtil {
 	}
 
 	
+	/**
+	 * Unzip from a stream
+	 * @param is
+	 * @param destination
+	 * @throws IOException
+	 */
 	public static final void unzip(InputStream is, File destination)
 			throws IOException {
 		ZipInputStream zis = new ZipInputStream(is);

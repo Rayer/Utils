@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * A too customized object, will be improved soon.
+ * It consumes key/value pair and transform into a sort like http://someurl.com?a=b&c=d&e=f
+ * @author rayer
+ *
+ */
 public class PostObject {
 	
 	//這四個以後一定要消滅掉, 看看用甚麼方法

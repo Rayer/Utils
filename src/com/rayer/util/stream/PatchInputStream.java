@@ -4,6 +4,11 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * This is a workaround to fix some JPG download from internet can't show in some device.
+ * @author rayer
+ *
+ */
 public class PatchInputStream extends FilterInputStream {
 	public PatchInputStream(InputStream in) {
 		super(in);

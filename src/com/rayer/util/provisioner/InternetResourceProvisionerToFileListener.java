@@ -4,6 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
+/**
+ * Only use with InternetResourceProvisionerToFile
+ * @author rayer
+ * @see InternetResourceProvisionerToFile
+ */
 public interface InternetResourceProvisionerToFileListener {
 	/**
 	 * While at checkpoint, provisioner will inform this method.<br>
