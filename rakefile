@@ -1,5 +1,5 @@
-language: java
-script: mvn -q clean package install
+language:java
+script:mvn -q clean package install
 # whitelist
 branches:
   only:
