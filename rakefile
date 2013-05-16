@@ -1,0 +1,11 @@
+language: java
+script: mvn -q clean package install
+# whitelist
+branches:
+  only:
+    - master
+notifications:
+  email:
+    - rayershih@gmail.com
+  irc:
+    - irc.freenode.org#rayer
