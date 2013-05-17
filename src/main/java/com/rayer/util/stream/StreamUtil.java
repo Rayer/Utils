@@ -1,6 +1,7 @@
 package com.rayer.util.stream;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -129,15 +130,36 @@ public class StreamUtil {
 		byte[] buffer = new byte[bufferSize];
 	    int len;
 
-	    while((len = in.read(buffer)) >= 0)
-	      out.write(buffer, 0, len);
+	    while((len = in.read(buffer)) >= 0) {
+	    	out.write(buffer, 0, len);
+	    }
 
+
+	    //EDIT : The close/flush responbility should relay on who creates them, 
+	    //not in this snippet.
 	    
-	    in.close();
-	    out.flush();
-	    out.close();
+	    //in.close();
+	    //out.flush();
+	    //out.close();
 	    
 	}
 
 
+	//TODO: Maybe it can integrate with InputStreamToString
+	public static byte[] InputStreamToBytes(InputStream is) throws IOException {
+		// TODO Auto-generated method stub
+		return InputStreamToBytes(is, 4096, null);
+	}
+	
+	public static byte[] InputStreamToBytes(InputStream is, int bufferSize, String terminator) throws IOException {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		int nRead;
+		byte[] data = new byte[bufferSize];
+		
+		while((nRead = is.read(data, 0, data.length))!= -1 ) {
+			buffer.write(data, 0, nRead);
+		}
+		buffer.flush();
+		return buffer.toByteArray();
+	}
 }
