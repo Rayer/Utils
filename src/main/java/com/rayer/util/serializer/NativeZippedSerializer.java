@@ -1,5 +1,7 @@
 package com.rayer.util.serializer;
 
-public class NativeZippedSerializer extends NativeSerializer<TARGET> {
+import java.io.Serializable;
+
+public class NativeZippedSerializer<TARGET extends Serializable> extends NativeSerializer<TARGET> {
 
 }
