@@ -39,7 +39,7 @@ public class NativeSerializer<TARGET extends Serializable> implements ISerialize
 		  ret = (TARGET)in.readObject(); 
 		} finally {
 		  bis.close();
-		  in.close();
+		  //in.close();
 		}
 		return ret;
 	}
