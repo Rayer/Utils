@@ -20,28 +20,6 @@ import com.rayer.util.stream.StreamUtil;
  */
 public class StringUtil {
 
-//	public static String formStringByToken(String inFormat, Object... objList) {
-//		
-//		//Actually, use %s only, as token of String.
-//		//As long as only %s was used, use object.toString() is sufficient.
-//		
-//		StringBuilder sb = processStringToken(inFormat, objList);
-//		
-//		return sb.toString();
-//	}
-//
-//	private static StringBuilder processStringToken(String inFormat,
-//			Object... objList) {
-//		String[] spilted = inFormat.split("%s");
-//		StringBuilder sb = new StringBuilder();
-//		
-//		for(int counter = 0; counter < objList.length; ++counter) {
-//			sb.append(spilted[counter]);
-//			sb.append(objList[counter].toString());
-//		}
-//		return sb;
-//	}
-
 	/**
 	 * A simple way to write string to file.
 	 * @param filePath
@@ -76,8 +54,10 @@ public class StringUtil {
 		DataOutputStream dataout = new DataOutputStream(fout);
 		byte[] data1 = content.getBytes("UTF-8");
 		dataout.write(data1);
-		fout.flush();
-		fout.close();
+		//fout.flush();
+		//fout.close();
+		dataout.flush();
+		dataout.close();
 
 	}
 	

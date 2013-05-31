@@ -2,8 +2,6 @@ package com.rayer.util.serializer.test;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Random;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
