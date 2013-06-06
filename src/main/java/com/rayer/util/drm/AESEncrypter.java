@@ -40,8 +40,8 @@ public class AESEncrypter implements EncrypterBase
 		AlgorithmParameterSpec paramSpec = new IvParameterSpec(ivBytes);
 		try
 		{
-			ecipher = Cipher.getInstance("AES/CBC/NoPadding");
-			dcipher = Cipher.getInstance("AES/CBC/NoPadding");
+			ecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			dcipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			
 			// CBC requires an initialization vector
 			ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
@@ -53,7 +53,8 @@ public class AESEncrypter implements EncrypterBase
 		}
 	}
 		
-	private byte[] asBin(String src) {
+	private byte[] asBin(byte[] entry) {
+		String src = new String(entry);
 		if (src.length() < 1)
 			return null;
 		byte[] encrypted = new byte[src.length() / 2];
@@ -66,7 +67,7 @@ public class AESEncrypter implements EncrypterBase
 		return encrypted;
 	} 
 	
-	private String asHex(byte buf[]) {
+	private byte[] asHex(byte buf[]) {
         StringBuffer strbuf = new StringBuffer(buf.length * 2);
         int i;
 
@@ -77,17 +78,17 @@ public class AESEncrypter implements EncrypterBase
             strbuf.append(Long.toString(buf[i] & 0xff, 16));
         }
 
-        return strbuf.toString();
+        return strbuf.toString().getBytes();
     }
 	
 	/* (non-Javadoc)
 	 * @see com.she.hami.reader.encryption.Encrypter#encrypt(java.lang.String)
 	 */
 	@Override
-	public String encrypt(String plainText) {
+	public byte[] encrypt(byte[] plain) {
 		byte[] cipherText = null;
 		try {
-			cipherText = ecipher.doFinal(plainText.getBytes()); 
+			cipherText = ecipher.doFinal(plain); 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -101,17 +102,15 @@ public class AESEncrypter implements EncrypterBase
 	 * @see com.she.hami.reader.encryption.Encrypter#decrypt(java.lang.String)
 	 */
 	@Override
-	public String decrypt(String encryptedText) {
+	public byte[] decrypt(byte[] encrypted) {
 		byte[] plainText = null;
 		try {
-			plainText = dcipher.doFinal(asBin(encryptedText));
+			plainText = dcipher.doFinal(asBin(encrypted));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		if(plainText == null)
-			return null;
-		else
-			return new String(plainText);
+		
+		return plainText;
 	}
 	
 	// Buffer used to transport the bytes from one stream to another
